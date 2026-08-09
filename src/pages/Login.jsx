@@ -1,11 +1,133 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+import ThemeToggle from '../components/ThemeToggle'
+
 function Login() {
+  const { signIn, signUp } = useAuth()
+  const navigate = useNavigate()
+
+  const [mode, setMode] = useState('signin')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+  const [infoMessage, setInfoMessage] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
+
+  const isSignUp = mode === 'signup'
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError(null)
+    setInfoMessage(null)
+    setSubmitting(true)
+
+    const action = isSignUp ? signUp : signIn
+    const { data, error } = await action(email, password)
+
+    setSubmitting(false)
+
+    if (error) {
+      setError(error)
+      return
+    }
+
+    if (isSignUp) {
+      if (!data.session) {
+        setInfoMessage(
+          'Cuenta creada. Revisa tu email para confirmar tu cuenta antes de iniciar sesión.'
+        )
+        setMode('signin')
+        return
+      }
+    }
+
+    navigate('/dashboard')
+  }
+
+  function toggleMode() {
+    setMode(isSignUp ? 'signin' : 'signup')
+    setError(null)
+    setInfoMessage(null)
+  }
+
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-slate-800 mb-6 text-center">
-          Iniciar sesión
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center px-4 relative transition-colors">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+      <div className="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-md dark:shadow-none dark:border dark:border-slate-700 w-full max-w-sm transition-colors">
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6 text-center">
+          {isSignUp ? 'Crear cuenta' : 'Iniciar sesión'}
         </h1>
-        <p className="text-slate-500 text-center">Login pendiente (Supabase Auth)</p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="tucorreo@ejemplo.com"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              Contraseña
+            </label>
+            <input
+              id="password"
+              type="password"
+              required
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Mínimo 6 caracteres"
+            />
+          </div>
+
+          {error && (
+            <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-md px-3 py-2">
+              {error}
+            </p>
+          )}
+
+          {infoMessage && (
+            <p className="text-sm text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md px-3 py-2">
+              {infoMessage}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full bg-blue-600 text-white font-medium py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          >
+            {submitting
+              ? 'Procesando...'
+              : isSignUp
+              ? 'Registrarme'
+              : 'Iniciar sesión'}
+          </button>
+        </form>
+
+        <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-6">
+          {isSignUp ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?'}{' '}
+          <button
+            type="button"
+            onClick={toggleMode}
+            className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+          >
+            {isSignUp ? 'Inicia sesión' : 'Regístrate'}
+          </button>
+        </p>
       </div>
     </div>
   )

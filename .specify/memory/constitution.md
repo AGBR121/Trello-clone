@@ -34,6 +34,9 @@ base de datos relacional, tiempo real, y buenas prácticas de desarrollo.
    vive en `useState` local.
 5. **Optimistic UI donde tenga sentido** (ej. mover una tarjeta), pero
    siempre reconciliando con la respuesta real de Supabase.
+6. **Dark mode obligatorio.** Toda pantalla y componente nuevo debe incluir
+   variantes `dark:` de Tailwind. El tema se controla vía clase `.dark` en
+   `<html>` (custom variant en `index.css`), gestionado por `useTheme`.
 
 ## 4. Estándares de código
 
