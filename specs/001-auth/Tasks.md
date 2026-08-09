@@ -1,9 +1,9 @@
 # Tasks 001: Autenticación de usuarios
 
-- [ ] T1 — Crear `src/hooks/useAuth.js` con estado de sesión y funciones
+- [x] T1 — Crear `src/hooks/useAuth.js` con estado de sesión y funciones
       `signUp`, `signIn`, `signOut`.
-- [ ] T2 — Crear `src/components/ProtectedRoute.jsx`.
-- [ ] T3 — Crear `src/components/PublicOnlyRoute.jsx`.
+- [x] T2 — Crear `src/components/ProtectedRoute.jsx`.
+- [x] T3 — Crear `src/components/PublicOnlyRoute.jsx`.
 - [ ] T4 — Reescribir `src/pages/Login.jsx` con formulario funcional
       (modo login/registro) usando `useAuth`.
 - [ ] T5 — Actualizar `src/pages/Dashboard.jsx`: saludo con email + botón
