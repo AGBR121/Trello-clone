@@ -1,7 +1,7 @@
 # Spec 001: Autenticación de usuarios
 
 ## Estado
-Borrador
+Completada ✅
 
 ## Contexto
 La aplicación necesita identificar quién es cada usuario para poder asociar

@@ -1,7 +1,2 @@
-@import "tailwindcss";
-
-@layer components {
-  .dark {
-    color-scheme: dark;
-  }
-}
+@import "tailwindcss"; 
+@custom-variant dark (&:where(.dark, .dark *));

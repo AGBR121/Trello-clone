@@ -10,9 +10,9 @@
       de cerrar sesión.
 - [x] T6 — Actualizar `src/App.jsx`: envolver rutas con `ProtectedRoute` /
       `PublicOnlyRoute`.
-- [ ] T7 — Probar manualmente: registro, login, logout, F5 con sesión
+- [x] T7 — Probar manualmente: registro, login, logout, F5 con sesión
       activa, acceso directo a `/dashboard` sin sesión.
-- [ ] T8 — Confirmar en el dashboard de Supabase que los usuarios de
+- [x] T8 — Confirmar en el dashboard de Supabase que los usuarios de
       prueba aparecen en Authentication → Users.
 
 ## Orden sugerido
