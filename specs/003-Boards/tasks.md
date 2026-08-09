@@ -4,9 +4,9 @@
       `board_members` (select + insert).
 - [ ] T2 — Correr en Supabase SQL Editor: función RPC `create_board`.
 - [x] T3 — Crear `src/hooks/useBoards.js`.
-- [ ] T4 — Crear `src/components/ConfirmDialog.jsx` (genérico,
+- [x] T4 — Crear `src/components/ConfirmDialog.jsx` (genérico,
       reutilizable).
-- [ ] T5 — Crear `src/components/BoardCard.jsx`.
+- [x] T5 — Crear `src/components/BoardCard.jsx`.
 - [ ] T6 — Crear `src/components/CreateBoardModal.jsx`.
 - [ ] T7 — Actualizar `src/pages/Dashboard.jsx`: listar boards, botón
       crear, estado vacío.
