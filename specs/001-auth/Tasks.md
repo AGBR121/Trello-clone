@@ -4,11 +4,11 @@
       `signUp`, `signIn`, `signOut`.
 - [x] T2 — Crear `src/components/ProtectedRoute.jsx`.
 - [x] T3 — Crear `src/components/PublicOnlyRoute.jsx`.
-- [ ] T4 — Reescribir `src/pages/Login.jsx` con formulario funcional
+- [x] T4 — Reescribir `src/pages/Login.jsx` con formulario funcional
       (modo login/registro) usando `useAuth`.
-- [ ] T5 — Actualizar `src/pages/Dashboard.jsx`: saludo con email + botón
+- [x] T5 — Actualizar `src/pages/Dashboard.jsx`: saludo con email + botón
       de cerrar sesión.
-- [ ] T6 — Actualizar `src/App.jsx`: envolver rutas con `ProtectedRoute` /
+- [x] T6 — Actualizar `src/App.jsx`: envolver rutas con `ProtectedRoute` /
       `PublicOnlyRoute`.
 - [ ] T7 — Probar manualmente: registro, login, logout, F5 con sesión
       activa, acceso directo a `/dashboard` sin sesión.

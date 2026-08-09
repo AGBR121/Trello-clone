@@ -6,8 +6,8 @@
       localStorage, detección de preferencia del sistema).
 - [x] T3 — Crear `src/components/ThemeToggle.jsx`.
 - [x] T4 — Aplicar `dark:` a `src/pages/Login.jsx` + agregar `ThemeToggle`.
-- [ ] T5 — Aplicar `dark:` a `src/pages/Dashboard.jsx` + agregar
-      `ThemeToggle` (pendiente hasta implementar T5 de la spec 001).
+- [x] T5 — Aplicar `dark:` a `src/pages/Dashboard.jsx` + agregar
+      `ThemeToggle`.
 - [ ] T6 — Aplicar `dark:` a `src/pages/BoardView.jsx` + agregar
       `ThemeToggle`.
 - [ ] T7 — Probar: toggle persiste tras F5, respeta preferencia del
