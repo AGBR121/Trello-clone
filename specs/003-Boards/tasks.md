@@ -3,7 +3,7 @@
 - [ ] T1 — Correr en Supabase SQL Editor: políticas RLS de
       `board_members` (select + insert).
 - [ ] T2 — Correr en Supabase SQL Editor: función RPC `create_board`.
-- [ ] T3 — Crear `src/hooks/useBoards.js`.
+- [x] T3 — Crear `src/hooks/useBoards.js`.
 - [ ] T4 — Crear `src/components/ConfirmDialog.jsx` (genérico,
       reutilizable).
 - [ ] T5 — Crear `src/components/BoardCard.jsx`.
