@@ -13,6 +13,7 @@ base de datos relacional, tiempo real, y buenas prácticas de desarrollo.
   justificados)
 - **Backend/DB:** Supabase (Postgres + Auth + Realtime)
 - **Routing:** React Router
+- **Formularios:** React Hook Form (validación y manejo de estado)
 - **Drag & drop:** @dnd-kit/core
 - **Gestor de paquetes:** bun
 

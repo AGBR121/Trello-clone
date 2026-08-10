@@ -14,6 +14,9 @@
       activa, acceso directo a `/dashboard` sin sesión.
 - [x] T8 — Confirmar en el dashboard de Supabase que los usuarios de
       prueba aparecen en Authentication → Users.
+- [x] T9 — (Post-lanzamiento) Refactorizar `Login.jsx` para usar
+      React Hook Form, por consistencia con el resto del proyecto
+      (decisión tomada en la spec 003).
 
 ## Orden sugerido
 T1 → T2 y T3 (en paralelo, son independientes) → T4 → T5 → T6 → T7 → T8

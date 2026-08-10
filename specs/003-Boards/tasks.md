@@ -7,7 +7,7 @@
 - [x] T4 — Crear `src/components/ConfirmDialog.jsx` (genérico,
       reutilizable).
 - [x] T5 — Crear `src/components/BoardCard.jsx`.
-- [ ] T6 — Crear `src/components/CreateBoardModal.jsx`.
+- [x] T6 — Crear `src/components/CreateBoardModal.jsx`.
 - [ ] T7 — Actualizar `src/pages/Dashboard.jsx`: listar boards, botón
       crear, estado vacío.
 - [ ] T8 — Actualizar `src/pages/BoardView.jsx`: traer tablero por id,

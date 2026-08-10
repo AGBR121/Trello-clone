@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import ThemeToggle from '../components/ThemeToggle'
@@ -7,37 +8,39 @@ function Login() {
   const { signIn, signUp } = useAuth()
   const navigate = useNavigate()
 
-  const [mode, setMode] = useState('signin')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
+  const [mode, setMode] = useState('signin') // 'signin' | 'signup'
   const [infoMessage, setInfoMessage] = useState(null)
-  const [submitting, setSubmitting] = useState(false)
 
   const isSignUp = mode === 'signup'
 
-  async function handleSubmit(e) {
-    e.preventDefault()
-    setError(null)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm({ defaultValues: { email: '', password: '' } })
+
+  async function onSubmit({ email, password }) {
     setInfoMessage(null)
-    setSubmitting(true)
 
     const action = isSignUp ? signUp : signIn
     const { data, error } = await action(email, password)
 
-    setSubmitting(false)
-
     if (error) {
-      setError(error)
+      // Error a nivel de formulario (no de un campo específico).
+      setError('root', { type: 'manual', message: error })
       return
     }
 
     if (isSignUp) {
+      // Si Supabase requiere confirmación de email, no habrá sesión todavía.
       if (!data.session) {
         setInfoMessage(
           'Cuenta creada. Revisa tu email para confirmar tu cuenta antes de iniciar sesión.'
         )
         setMode('signin')
+        reset({ email: '', password: '' })
         return
       }
     }
@@ -47,8 +50,8 @@ function Login() {
 
   function toggleMode() {
     setMode(isSignUp ? 'signin' : 'signup')
-    setError(null)
     setInfoMessage(null)
+    reset({ email: '', password: '' })
   }
 
   return (
@@ -61,7 +64,7 @@ function Login() {
           {isSignUp ? 'Crear cuenta' : 'Iniciar sesión'}
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               Email
@@ -69,12 +72,21 @@ function Login() {
             <input
               id="email"
               type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register('email', {
+                required: 'El email es obligatorio.',
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Ingresa un email válido.',
+                },
+              })}
               className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="tucorreo@ejemplo.com"
             />
+            {errors.email && (
+              <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -84,18 +96,26 @@ function Login() {
             <input
               id="password"
               type="password"
-              required
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              {...register('password', {
+                required: 'La contraseña es obligatoria.',
+                minLength: {
+                  value: 6,
+                  message: 'La contraseña debe tener al menos 6 caracteres.',
+                },
+              })}
               className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Mínimo 6 caracteres"
             />
+            {errors.password && (
+              <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
-          {error && (
+          {errors.root && (
             <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-md px-3 py-2">
-              {error}
+              {errors.root.message}
             </p>
           )}
 
@@ -107,10 +127,10 @@ function Login() {
 
           <button
             type="submit"
-            disabled={submitting}
+            disabled={isSubmitting}
             className="w-full bg-blue-600 text-white font-medium py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
           >
-            {submitting
+            {isSubmitting
               ? 'Procesando...'
               : isSignUp
               ? 'Registrarme'
