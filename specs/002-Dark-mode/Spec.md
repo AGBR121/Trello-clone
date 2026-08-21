@@ -1,7 +1,7 @@
 # Spec 002: Modo oscuro
 
 ## Estado
-Borrador
+Implementación completa, pendiente de prueba final (T7)
 
 ## Contexto
 La app debe soportar tema claro/oscuro de forma global, controlable por el
