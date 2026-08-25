@@ -1,7 +1,7 @@
 # Spec 002: Modo oscuro
 
 ## Estado
-Implementación completa, pendiente de prueba final (T7)
+Completada ✅
 
 ## Contexto
 La app debe soportar tema claro/oscuro de forma global, controlable por el
@@ -26,14 +26,14 @@ sesiones.
 
 ## Criterios de aceptación
 
-- [ ] Existe un botón/toggle de tema accesible desde cualquier pantalla.
-- [ ] El tema elegido persiste tras recargar la página.
-- [ ] Sin preferencia guardada, se usa `prefers-color-scheme` del sistema.
-- [ ] Login, Dashboard y BoardView tienen estilos `dark:` completos, sin
+- [x] Existe un botón/toggle de tema accesible desde cualquier pantalla.
+- [x] El tema elegido persiste tras recargar la página.
+- [x] Sin preferencia guardada, se usa `prefers-color-scheme` del sistema.
+- [x] Login, Dashboard y BoardView tienen estilos `dark:` completos, sin
       texto ilegible o fondos que rompan el contraste.
 
 ## Decisión técnica
 Tailwind v4 usa `prefers-color-scheme` por defecto para `dark:`. Para
-permitir un toggle manual controlado por el usuario, se define un
+permitir un toggle manual controlado por el usuario, se definió un
 custom variant basado en clase (`.dark` en `<html>`), y un hook
 `useTheme` que la controla y persiste en `localStorage`.

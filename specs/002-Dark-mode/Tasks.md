@@ -8,7 +8,7 @@
 - [x] T4 — Aplicar `dark:` a `src/pages/Login.jsx` + agregar `ThemeToggle`.
 - [x] T5 — Aplicar `dark:` a `src/pages/Dashboard.jsx` + agregar
       `ThemeToggle`.
-- [ ] T6 — Aplicar `dark:` a `src/pages/BoardView.jsx` + agregar
+- [x] T6 — Aplicar `dark:` a `src/pages/BoardView.jsx` + agregar
       `ThemeToggle`.
-- [ ] T7 — Probar: toggle persiste tras F5, respeta preferencia del
+- [x] T7 — Probar: toggle persiste tras F5, respeta preferencia del
       sistema en primera visita, sin contrastes rotos en ninguna pantalla.
