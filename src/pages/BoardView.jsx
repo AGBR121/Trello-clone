@@ -17,10 +17,7 @@ function BoardView() {
     async function fetchBoard() {
       setLoading(true)
       setNotFound(false)
-
-      // Si el tablero no existe, o RLS lo bloquea porque no eres
-      // owner/member, Supabase simplemente no devuelve la fila
-      // (data === null), sin lanzar un error explícito.
+      
       const { data, error } = await supabase
         .from('boards')
         .select('*')
