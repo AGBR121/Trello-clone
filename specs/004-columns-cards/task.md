@@ -1,10 +1,10 @@
 # Tasks 004: Columnas y Tarjetas (Kanban)
 
-- [ ] T1 — Correr en Supabase SQL Editor: políticas RLS de `columns` y
+- [x] T1 — Correr en Supabase SQL Editor: políticas RLS de `columns` y
       `cards`.
-- [ ] T2 — Instalar `@dnd-kit/core`, `@dnd-kit/sortable`,
+- [x] T2 — Instalar `@dnd-kit/core`, `@dnd-kit/sortable`,
       `@dnd-kit/utilities`.
-- [ ] T3 — Crear `src/hooks/useColumns.js` (fetch anidado, createColumn,
+- [x] T3 — Crear `src/hooks/useColumns.js` (fetch anidado, createColumn,
       deleteColumn, reorderCards).
 - [ ] T4 — Crear `src/components/CreateColumnForm.jsx`.
 - [ ] T5 — Crear `src/components/CardItem.jsx` (con `useSortable`).
