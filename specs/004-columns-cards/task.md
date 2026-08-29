@@ -6,8 +6,8 @@
       `@dnd-kit/utilities`.
 - [x] T3 — Crear `src/hooks/useColumns.js` (fetch anidado, createColumn,
       deleteColumn, reorderCards).
-- [ ] T4 — Crear `src/components/CreateColumnForm.jsx`.
-- [ ] T5 — Crear `src/components/CardItem.jsx` (con `useSortable`).
+- [x] T4 — Crear `src/components/CreateColumnForm.jsx`.
+- [x] T5 — Crear `src/components/CardItem.jsx` (con `useSortable`).
 - [ ] T6 — Crear `src/components/Column.jsx` (con `SortableContext` +
       `useDroppable`, incluye `CreateColumnForm`/agregar tarjeta inline).
 - [ ] T7 — Crear `src/components/CardDetailModal.jsx` (React Hook Form:
