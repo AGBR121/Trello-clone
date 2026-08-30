@@ -8,7 +8,7 @@
       deleteColumn, reorderCards).
 - [x] T4 — Crear `src/components/CreateColumnForm.jsx`.
 - [x] T5 — Crear `src/components/CardItem.jsx` (con `useSortable`).
-- [ ] T6 — Crear `src/components/Column.jsx` (con `SortableContext` +
+- [x] T6 — Crear `src/components/Column.jsx` (con `SortableContext` +
       `useDroppable`, incluye `CreateColumnForm`/agregar tarjeta inline).
 - [ ] T7 — Crear `src/components/CardDetailModal.jsx` (React Hook Form:
       título, descripción, fecha límite; incluye eliminar).
