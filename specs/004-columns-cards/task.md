@@ -10,7 +10,7 @@
 - [x] T5 — Crear `src/components/CardItem.jsx` (con `useSortable`).
 - [x] T6 — Crear `src/components/Column.jsx` (con `SortableContext` +
       `useDroppable`, incluye `CreateColumnForm`/agregar tarjeta inline).
-- [ ] T7 — Crear `src/components/CardDetailModal.jsx` (React Hook Form:
+- [x] T7 — Crear `src/components/CardDetailModal.jsx` (React Hook Form:
       título, descripción, fecha límite; incluye eliminar).
 - [ ] T8 — Actualizar `src/pages/BoardView.jsx`: `DndContext`, layout de
       columnas con scroll horizontal, `onDragEnd` conectado a
