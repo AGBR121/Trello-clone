@@ -12,7 +12,7 @@
       `useDroppable`, incluye `CreateColumnForm`/agregar tarjeta inline).
 - [x] T7 — Crear `src/components/CardDetailModal.jsx` (React Hook Form:
       título, descripción, fecha límite; incluye eliminar).
-- [ ] T8 — Actualizar `src/pages/BoardView.jsx`: `DndContext`, layout de
+- [x] T8 — Actualizar `src/pages/BoardView.jsx`: `DndContext`, layout de
       columnas con scroll horizontal, `onDragEnd` conectado a
       `reorderCards`.
 - [ ] T9 — Probar manualmente: crear columna, crear tarjeta, editar
