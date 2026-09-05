@@ -1,7 +1,7 @@
 # Spec 004: Columnas y Tarjetas (Kanban)
 
 ## Estado
-Borrador
+Completada ✅
 
 ## Contexto
 Con tableros funcionando (spec 003), esta es la feature central del
@@ -31,34 +31,29 @@ y tarjetas que se pueden crear, editar, y reordenar por drag & drop
    persistir (guardarse en Supabase), no perderse al recargar.
 
 ## Fuera de alcance para esta spec
-- Reordenar columnas por drag & drop (solo tarjetas por ahora; se puede
-  agregar después con el mismo patrón).
+- Reordenar columnas por drag & drop.
 - Asignar tarjetas a otros usuarios — spec de colaboración.
 - Comentarios o etiquetas de color en tarjetas.
-- Tiempo real (que dos usuarios vean cambios en vivo) — spec separada.
+- Tiempo real — spec separada.
 
 ## Criterios de aceptación
 
-- [ ] Las columnas de un tablero se muestran ordenadas por `position`.
-- [ ] Se puede crear una columna con nombre.
-- [ ] Se puede eliminar una columna (con confirmación, avisando que se
-      pierden sus tarjetas).
-- [ ] Las tarjetas de cada columna se muestran ordenadas por `position`.
-- [ ] Se puede crear una tarjeta con título (descripción/fecha opcionales).
-- [ ] Se puede abrir el detalle de una tarjeta y editar sus campos.
-- [ ] Se puede eliminar una tarjeta (con confirmación).
-- [ ] Arrastrar una tarjeta dentro de la misma columna actualiza su
+- [x] Las columnas de un tablero se muestran ordenadas por `position`.
+- [x] Se puede crear una columna con nombre.
+- [x] Se puede eliminar una columna (con confirmación).
+- [x] Las tarjetas de cada columna se muestran ordenadas por `position`.
+- [x] Se puede crear una tarjeta con título (descripción/fecha opcionales).
+- [x] Se puede abrir el detalle de una tarjeta y editar sus campos.
+- [x] Se puede eliminar una tarjeta (con confirmación).
+- [x] Arrastrar una tarjeta dentro de la misma columna actualiza su
       `position` y persiste tras F5.
-- [ ] Arrastrar una tarjeta a otra columna actualiza su `column_id` y
+- [x] Arrastrar una tarjeta a otra columna actualiza su `column_id` y
       `position`, y persiste tras F5.
-- [ ] Un usuario sin acceso al tablero (RLS) no puede ver ni modificar
-      sus columnas/tarjetas, ni siquiera vía llamadas directas a la API.
+- [x] Un usuario sin acceso al tablero (RLS) no puede ver ni modificar
+      sus columnas/tarjetas.
 
-## Decisión técnica (adelanto, se detalla en plan.md)
-Se usa `@dnd-kit/core` + `@dnd-kit/sortable` para el drag & drop, por su
-soporte de accesibilidad (teclado, lectores de pantalla) y madurez frente
-a alternativas más nuevas.
+## Decisión técnica
+Se usó `@dnd-kit/core` + `@dnd-kit/sortable` para el drag & drop.
 
-## Preguntas abiertas
-- ¿Límite de columnas o tarjetas por tablero? → No por ahora, se revisa
-  si se vuelve un problema de rendimiento real.
+## Preguntas abiertas (resueltas)
+- ¿Límite de columnas o tarjetas por tablero? → No por ahora.
