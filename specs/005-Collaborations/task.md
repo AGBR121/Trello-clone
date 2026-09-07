@@ -1,10 +1,10 @@
 # Tasks 005: Colaboración (invitar miembros)
 
-- [ ] T1 — Correr en Supabase SQL Editor: función `invite_member_by_email`.
-- [ ] T2 — Correr en Supabase SQL Editor: función `get_board_members`.
-- [ ] T3 — Correr en Supabase SQL Editor: policy de `delete` en
+- [x] T1 — Correr en Supabase SQL Editor: función `invite_member_by_email`.
+- [x] T2 — Correr en Supabase SQL Editor: función `get_board_members`.
+- [x] T3 — Correr en Supabase SQL Editor: policy de `delete` en
       `board_members`.
-- [ ] T4 — Crear `src/hooks/useBoardMembers.js`.
+- [x] T4 — Crear `src/hooks/useBoardMembers.js`.
 - [ ] T5 — Crear `src/components/MembersPanel.jsx`.
 - [ ] T6 — Actualizar `src/pages/BoardView.jsx`: botón "Miembros" en el
       header, conectar `MembersPanel`, manejar salida del tablero
