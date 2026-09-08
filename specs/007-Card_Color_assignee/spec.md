@@ -1,13 +1,13 @@
 # Spec 007: Color y encargado de tarjeta
 
 ## Estado
-Borrador
+Completada ✅
 
 ## Contexto
 Se agregan dos mejoras visuales/funcionales a las tarjetas del Kanban:
 un color de etiqueta (como las labels de Trello) y un encargado
 (assignee) elegido entre los miembros del tablero. La columna
-`assigned_to` ya existe en el esquema desde el inicio del proyecto,
+`assigned_to` ya existía en el esquema desde el inicio del proyecto,
 pero nunca se usó en la UI hasta ahora.
 
 ## Qué queremos (user stories)
@@ -25,27 +25,26 @@ pero nunca se usó en la UI hasta ahora.
 
 ## Fuera de alcance para esta spec
 - Colores personalizados (código hex libre) — solo un set fijo predefinido.
-- Múltiples encargados por tarjeta (solo uno, como en Trello clásico).
-- Filtrar/agrupar tarjetas por color o encargado — spec futura si se
-  necesita.
+- Múltiples encargados por tarjeta.
+- Filtrar/agrupar tarjetas por color o encargado.
 - Notificar al encargado cuando se le asigna una tarjeta.
 
 ## Criterios de aceptación
 
-- [ ] El detalle de una tarjeta permite elegir un color de un set fijo
-      (mínimo 6 opciones) o "sin color".
-- [ ] El color elegido se ve en la tarjeta dentro de la columna (ej.
-      una barra o borde de color).
-- [ ] El detalle de una tarjeta permite elegir un encargado de la lista
-      de miembros del tablero, o "Sin asignar" (que guarda `null` en
-      `assigned_to`, valor por defecto cuando se crea una tarjeta).
-- [ ] La tarjeta en la columna muestra alguna indicación visual del
-      encargado (ej. iniciales en un círculo).
-- [ ] Ambos campos son opcionales y se pueden quitar después de asignados.
-- [ ] Solo se puede asignar a alguien que sea miembro del tablero (no
-      cualquier usuario del sistema).
+- [x] El detalle de una tarjeta permite elegir un color de un set fijo
+      (7 opciones) o "sin color".
+- [x] El color elegido se ve en la tarjeta dentro de la columna (barra
+      superior de color).
+- [x] El detalle de una tarjeta permite elegir un encargado de la lista
+      de miembros del tablero, o "Sin asignar" (guarda `null`).
+- [x] La tarjeta en la columna muestra un círculo con las iniciales del
+      encargado.
+- [x] Ambos campos son opcionales y se pueden quitar después de asignados.
+- [x] Solo se puede asignar a alguien que sea miembro del tablero (el
+      selector solo se llena con `members` de ese tablero específico).
 
-## Preguntas abiertas
-- ¿Qué colores exactos incluir en el set fijo? → Se define en el plan
-  técnico, usando la paleta de Tailwind para consistencia visual con el
-  resto de la app.
+## Decisión técnica
+Colores fijos en hexadecimal (paleta Tailwind tono 400), guardados
+directo en `cards.color` como texto. Se renderizan con `style` inline
+en vez de clases de Tailwind, ya que Tailwind no puede generar clases
+dinámicas para colores arbitrarios provenientes de datos.

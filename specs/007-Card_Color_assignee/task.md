@@ -6,11 +6,11 @@
       `members`).
 - [x] T3 — Actualizar `src/components/CardItem.jsx`: barra de color +
       círculo de iniciales del encargado.
-- [ ] T4 — Actualizar `src/components/Column.jsx`: recibir y reenviar
+- [x] T4 — Actualizar `src/components/Column.jsx`: recibir y reenviar
       `members`, resolver username del `assigned_to` por tarjeta.
 - [x] T5 — Actualizar `src/pages/BoardView.jsx`: pasar `members` a
       `Column` y a `CardDetailModal`.
-- [ ] T6 — Probar: asignar color a una tarjeta y verlo en la columna,
+- [x] T6 — Probar: asignar color a una tarjeta y verlo en la columna,
       quitar el color, asignar un encargado y ver sus iniciales, quitar
       el encargado, confirmar que el selector de encargado solo muestra
       miembros reales del tablero.

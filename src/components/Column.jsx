@@ -11,7 +11,7 @@ import ConfirmDialog from './ConfirmDialog'
  * poder soltar una tarjeta incluso en una columna vacía), y el input
  * inline para agregar tarjetas al final.
  */
-function Column({ column, onDeleteColumn, onCreateCard, onOpenCard }) {
+function Column({ column, members = [], onDeleteColumn, onCreateCard, onOpenCard }) {
   const [showConfirm, setShowConfirm] = useState(false)
   const [addingCard, setAddingCard] = useState(false)
 
@@ -26,6 +26,12 @@ function Column({ column, onDeleteColumn, onCreateCard, onOpenCard }) {
   } = useForm({ defaultValues: { title: '' } })
 
   const cardIds = column.cards.map((c) => c.id)
+
+  function getAssigneeUsername(userId) {
+    if (!userId) return null
+    const member = members.find((m) => m.user_id === userId)
+    return member ? member.username || member.email : null
+  }
 
   function startAddingCard() {
     setAddingCard(true)
@@ -75,7 +81,12 @@ function Column({ column, onDeleteColumn, onCreateCard, onOpenCard }) {
       >
         <SortableContext items={cardIds} strategy={verticalListSortingStrategy}>
           {column.cards.map((card) => (
-            <CardItem key={card.id} card={card} onOpen={onOpenCard} />
+            <CardItem
+              key={card.id}
+              card={card}
+              assigneeUsername={getAssigneeUsername(card.assigned_to)}
+              onOpen={onOpenCard}
+            />
           ))}
         </SortableContext>
       </div>
