@@ -9,7 +9,7 @@
 - [x] T6 — Actualizar `src/pages/BoardView.jsx`: botón "Miembros" en el
       header, conectar `MembersPanel`, manejar salida del tablero
       (redirect a `/dashboard`).
-- [ ] T7 — Probar: invitar por email válido, email no registrado, email
+- [x] T7 — Probar: invitar por email válido, email no registrado, email
       ya miembro, remover un miembro (como owner), salir de un tablero
       (como miembro), confirmar que un no-owner no puede invitar/remover
       (ni siquiera llamando el RPC directamente).

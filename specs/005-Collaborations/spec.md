@@ -1,7 +1,7 @@
 # Spec 005: Colaboración (invitar miembros)
 
 ## Estado
-Borrador
+Completada ✅
 
 ## Contexto
 Hasta ahora `board_members` solo se pobló automáticamente al crear un
