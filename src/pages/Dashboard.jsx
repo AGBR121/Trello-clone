@@ -2,16 +2,20 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useBoards } from '../hooks/useBoards'
+import { useProfile } from '../hooks/useProfile'
 import ThemeToggle from '../components/ThemeToggle'
 import BoardCard from '../components/BoardCard'
 import CreateBoardModal from '../components/CreateBoardModal'
+import EditProfileModal from '../components/EditProfileModal'
 
 function Dashboard() {
   const { user, signOut } = useAuth()
   const { boards, loading, error, createBoard, deleteBoard } = useBoards()
+  const { profile, updateUsername } = useProfile()
   const navigate = useNavigate()
 
   const [showCreateModal, setShowCreateModal] = useState(false)
+  const [showEditProfile, setShowEditProfile] = useState(false)
 
   async function handleSignOut() {
     await signOut()
@@ -19,17 +23,24 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-900 transition-colors">
-      <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 transition-colors">
+    <div className="min-h-screen bg-slate-100 dark:bg-neutral-900 transition-colors">
+      <header className="bg-white dark:bg-neutral-800 border-b border-slate-200 dark:border-neutral-700 transition-colors">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100">
+          <h1 className="text-xl font-bold text-slate-800 dark:text-neutral-100">
             Mis tableros
           </h1>
 
           <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-500 dark:text-slate-400 hidden sm:inline">
-              {user?.email}
-            </span>
+            <button
+              type="button"
+              onClick={() => setShowEditProfile(true)}
+              className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-neutral-400 hover:text-slate-800 dark:hover:text-neutral-200 transition"
+            >
+              {profile?.username || user?.email}
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+              </svg>
+            </button>
             <ThemeToggle />
             <button
               type="button"
@@ -44,7 +55,7 @@ function Dashboard() {
 
       <main className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-neutral-400">
             {boards.length} tablero{boards.length !== 1 && 's'}
           </p>
           <button
@@ -66,10 +77,10 @@ function Dashboard() {
         )}
 
         {loading ? (
-          <p className="text-slate-500 dark:text-slate-400">Cargando tableros...</p>
+          <p className="text-slate-500 dark:text-neutral-400">Cargando tableros...</p>
         ) : boards.length === 0 ? (
-          <div className="text-center py-20 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg">
-            <p className="text-slate-500 dark:text-slate-400 mb-4">
+          <div className="text-center py-20 border-2 border-dashed border-slate-300 dark:border-neutral-700 rounded-lg">
+            <p className="text-slate-500 dark:text-neutral-400 mb-4">
               Todavía no tienes tableros.
             </p>
             <button
@@ -98,6 +109,13 @@ function Dashboard() {
         open={showCreateModal}
         onCreate={createBoard}
         onClose={() => setShowCreateModal(false)}
+      />
+
+      <EditProfileModal
+        open={showEditProfile}
+        currentUsername={profile?.username}
+        onSave={updateUsername}
+        onClose={() => setShowEditProfile(false)}
       />
     </div>
   )

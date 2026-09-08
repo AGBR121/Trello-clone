@@ -10,11 +10,11 @@
       con `username` incluido (drop + create).
 - [x] T5 — Crear `src/hooks/useProfile.js`.
 - [x] T6 — Crear `src/components/EditProfileModal.jsx`.
-- [ ] T7 — Actualizar `src/pages/Dashboard.jsx`: mostrar username +
+- [x] T7 — Actualizar `src/pages/Dashboard.jsx`: mostrar username +
       botón editar perfil.
-- [ ] T8 — Actualizar `src/components/MembersPanel.jsx`: mostrar
+- [x] T8 — Actualizar `src/components/MembersPanel.jsx`: mostrar
       username en vez de email.
-- [ ] T9 — Probar: registrar un usuario nuevo y confirmar username
+- [x] T9 — Probar: registrar un usuario nuevo y confirmar username
       automático, editar username propio, intentar un username
       duplicado, ver username reflejado en Dashboard y en Miembros de
       otro tablero.

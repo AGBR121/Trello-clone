@@ -48,7 +48,7 @@ function CreateColumnForm({ onCreate }) {
       <button
         type="button"
         onClick={startEditing}
-        className="shrink-0 w-72 h-fit flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded-lg px-4 py-3 transition"
+        className="shrink-0 w-72 h-fit flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-neutral-400 hover:bg-slate-200/60 dark:hover:bg-neutral-800 rounded-lg px-4 py-3 transition"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 5v14M5 12h14" />
@@ -61,14 +61,14 @@ function CreateColumnForm({ onCreate }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="shrink-0 w-72 bg-slate-200/60 dark:bg-slate-800 rounded-lg p-3"
+      className="shrink-0 w-72 bg-slate-200/60 dark:bg-neutral-800 rounded-lg p-3"
     >
       <input
         type="text"
         {...register('name', { required: true })}
         onKeyDown={(e) => e.key === 'Escape' && cancelEditing()}
         placeholder="Nombre de la columna"
-        className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-sm text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-sm text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       {errors.name && (
         <p className="text-xs text-red-600 dark:text-red-400 mt-1">
@@ -86,7 +86,7 @@ function CreateColumnForm({ onCreate }) {
         <button
           type="button"
           onClick={cancelEditing}
-          className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5"
+          className="text-slate-400 hover:text-slate-600 dark:hover:text-neutral-200 p-1.5"
           aria-label="Cancelar"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

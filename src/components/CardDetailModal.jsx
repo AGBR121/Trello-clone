@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ConfirmDialog from './ConfirmDialog'
 
-
+/**
+ * `card` es null cuando el modal está cerrado (se controla así en vez
+ * de un booleano `open` separado, porque necesitamos los datos de la
+ * tarjeta específica que se abrió).
+ */
 function CardDetailModal({ card, onSave, onDelete, onClose }) {
   const [showConfirm, setShowConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -65,12 +69,12 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
         aria-modal="true"
         aria-labelledby="card-detail-title"
         onClick={(e) => e.stopPropagation()}
-        className="bg-white dark:bg-slate-800 dark:border dark:border-slate-700 rounded-lg shadow-lg w-full max-w-md p-6"
+        className="bg-white dark:bg-neutral-800 dark:border dark:border-neutral-700 rounded-lg shadow-lg w-full max-w-md p-6"
       >
         <div className="flex items-start justify-between mb-4">
           <h2
             id="card-detail-title"
-            className="text-lg font-semibold text-slate-800 dark:text-slate-100"
+            className="text-lg font-semibold text-slate-800 dark:text-neutral-100"
           >
             Detalle de la tarjeta
           </h2>
@@ -78,7 +82,7 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
-            className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+            className="text-slate-400 hover:text-slate-600 dark:hover:text-neutral-200"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 6L6 18M6 6l12 12" />
@@ -88,14 +92,14 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="title" className="block text-sm font-medium text-slate-700 dark:text-neutral-300 mb-1">
               Título
             </label>
             <input
               id="title"
               type="text"
               {...register('title', { required: 'El título es obligatorio.' })}
-              className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.title && (
               <p className="text-sm text-red-600 dark:text-red-400 mt-1">
@@ -105,7 +109,7 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="description" className="block text-sm font-medium text-slate-700 dark:text-neutral-300 mb-1">
               Descripción
             </label>
             <textarea
@@ -113,19 +117,19 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
               rows={4}
               {...register('description')}
               placeholder="Agrega más detalles (opcional)"
-              className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
             />
           </div>
 
           <div>
-            <label htmlFor="due_date" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="due_date" className="block text-sm font-medium text-slate-700 dark:text-neutral-300 mb-1">
               Fecha límite
             </label>
             <input
               id="due_date"
               type="date"
               {...register('due_date')}
-              className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -142,7 +146,7 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-sm font-medium rounded-md text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition"
+                className="px-4 py-2 text-sm font-medium rounded-md text-slate-700 dark:text-neutral-300 hover:bg-slate-100 dark:hover:bg-neutral-700 transition"
               >
                 Cancelar
               </button>

@@ -51,16 +51,16 @@ function Column({ column, onDeleteColumn, onCreateCard, onOpenCard }) {
   }
 
   return (
-    <div className="shrink-0 w-72 bg-slate-200/60 dark:bg-slate-800 rounded-lg p-3 h-fit max-h-full flex flex-col">
+    <div className="shrink-0 w-72 bg-slate-200/60 dark:bg-neutral-800 rounded-lg p-3 h-fit max-h-full flex flex-col">
       <div className="flex items-center justify-between mb-3 px-1">
-        <h3 className="font-semibold text-sm text-slate-700 dark:text-slate-200 truncate">
+        <h3 className="font-semibold text-sm text-slate-700 dark:text-neutral-200 truncate">
           {column.name}
         </h3>
         <button
           type="button"
           onClick={() => setShowConfirm(true)}
           aria-label="Eliminar columna"
-          className="text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 transition"
+          className="text-slate-400 dark:text-neutral-500 hover:text-red-600 dark:hover:text-red-400 transition"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="3 6 5 6 21 6" />
@@ -93,7 +93,7 @@ function Column({ column, onDeleteColumn, onCreateCard, onOpenCard }) {
               }
             }}
             placeholder="Título de la tarjeta"
-            className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-sm text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-sm text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
           />
           <div className="flex items-center gap-2 mt-2">
             <button
@@ -106,7 +106,7 @@ function Column({ column, onDeleteColumn, onCreateCard, onOpenCard }) {
             <button
               type="button"
               onClick={cancelAddingCard}
-              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5"
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-neutral-200 p-1.5"
               aria-label="Cancelar"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -119,7 +119,7 @@ function Column({ column, onDeleteColumn, onCreateCard, onOpenCard }) {
         <button
           type="button"
           onClick={startAddingCard}
-          className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-300/50 dark:hover:bg-slate-700 rounded-md px-2 py-2 mt-2 transition"
+          className="flex items-center gap-2 text-sm text-slate-500 dark:text-neutral-400 hover:bg-slate-300/50 dark:hover:bg-neutral-700 rounded-md px-2 py-2 mt-2 transition"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14M5 12h14" />

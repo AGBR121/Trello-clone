@@ -1,10 +1,10 @@
 # Spec 006: Perfiles de usuario (nombre de usuario)
 
 ## Estado
-Borrador
+Completada ✅
 
 ## Contexto
-Hasta ahora la app solo conoce el `email` de cada usuario (vía
+Hasta ahora la app solo conocía el `email` de cada usuario (vía
 `auth.users`). Esta spec agrega un nombre de usuario editable, visible
 en el header del Dashboard y en la lista de miembros de un tablero, en
 vez del email.
@@ -25,28 +25,26 @@ vez del email.
 
 ## Fuera de alcance para esta spec
 - Foto de perfil / avatar.
-- Cambiar el email o la contraseña desde este mismo flujo (ya existe
-  gestión básica vía Supabase Auth si se necesita después).
+- Cambiar el email o la contraseña desde este mismo flujo.
 - Validación de contenido del username (groserías, etc.) — solo se
   valida unicidad y formato básico (sin espacios, longitud razonable).
 
 ## Criterios de aceptación
 
-- [ ] Todo usuario nuevo obtiene un username automático al registrarse
+- [x] Todo usuario nuevo obtiene un username automático al registrarse
       (derivado de la parte del email antes de la `@`, con sufijo
       numérico si ya existe).
-- [ ] Existe una UI para editar el username propio.
-- [ ] Intentar guardar un username ya usado por otra persona muestra un
+- [x] Existe una UI para editar el username propio.
+- [x] Intentar guardar un username ya usado por otra persona muestra un
       mensaje claro de error.
-- [ ] El header del Dashboard muestra el username, no el email.
-- [ ] `MembersPanel` muestra el username de cada miembro (con el email
-      como respaldo si por alguna razón no tiene username, aunque no
-      debería pasar dado el punto 1).
-- [ ] Usuarios que ya existían antes de esta spec (creados en specs
-      anteriores) también tienen un username asignado (migración/backfill).
+- [x] El header del Dashboard muestra el username, no el email.
+- [x] `MembersPanel` muestra el username de cada miembro (con el email
+      como respaldo si por alguna razón no tiene username).
+- [x] Usuarios que ya existían antes de esta spec también tienen un
+      username asignado (migración/backfill).
 
-## Preguntas abiertas
-- ¿Reglas de formato del username (longitud mínima/máxima, caracteres
-  permitidos)? → Mínimo 3, máximo 20 caracteres, solo letras, números y
-  guion bajo. Se valida en el formulario y también se puede reforzar a
-  nivel de base de datos si se detectan problemas en la práctica.
+## Preguntas abiertas (resueltas)
+- ¿Reglas de formato del username? → Mínimo 3, máximo 20 caracteres,
+  solo letras, números y guion bajo. Validado tanto en el cliente
+  (React Hook Form) como implícitamente por la constraint `unique` de
+  la base de datos para la unicidad.

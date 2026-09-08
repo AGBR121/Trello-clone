@@ -136,20 +136,20 @@ function BoardView() {
 
   if (boardLoading) {
     return (
-      <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center transition-colors">
-        <p className="text-slate-500 dark:text-slate-400">Cargando tablero...</p>
+      <div className="min-h-screen bg-slate-100 dark:bg-neutral-900 flex items-center justify-center transition-colors">
+        <p className="text-slate-500 dark:text-neutral-400">Cargando tablero...</p>
       </div>
     )
   }
 
   if (notFound) {
     return (
-      <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center px-4 transition-colors">
+      <div className="min-h-screen bg-slate-100 dark:bg-neutral-900 flex items-center justify-center px-4 transition-colors">
         <div className="text-center">
-          <h1 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-2">
+          <h1 className="text-xl font-semibold text-slate-800 dark:text-neutral-100 mb-2">
             Tablero no encontrado o sin acceso
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mb-6">
+          <p className="text-slate-500 dark:text-neutral-400 mb-6">
             Este tablero no existe o no tienes permiso para verlo.
           </p>
           <button
@@ -165,21 +165,21 @@ function BoardView() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-slate-100 dark:bg-slate-900 transition-colors">
-      <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shrink-0">
+    <div className="h-screen flex flex-col bg-slate-100 dark:bg-neutral-900 transition-colors">
+      <header className="bg-white dark:bg-neutral-800 border-b border-slate-200 dark:border-neutral-700 shrink-0">
         <div className="px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 min-w-0">
             <button
               type="button"
               onClick={() => navigate('/dashboard')}
               aria-label="Volver a mis tableros"
-              className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-100"
+              className="text-slate-500 dark:text-neutral-400 hover:text-slate-800 dark:hover:text-neutral-100"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
             </button>
-            <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100 truncate">
+            <h1 className="text-xl font-bold text-slate-800 dark:text-neutral-100 truncate">
               {board.name}
             </h1>
           </div>
@@ -188,7 +188,7 @@ function BoardView() {
             <button
               type="button"
               onClick={() => setShowMembers(true)}
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md px-3 py-1.5 transition"
+              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-neutral-300 hover:bg-slate-100 dark:hover:bg-neutral-700 rounded-md px-3 py-1.5 transition"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -210,7 +210,7 @@ function BoardView() {
 
       <main className="flex-1 overflow-x-auto overflow-y-hidden px-6 py-4">
         {columnsLoading ? (
-          <p className="text-slate-500 dark:text-slate-400">Cargando columnas...</p>
+          <p className="text-slate-500 dark:text-neutral-400">Cargando columnas...</p>
         ) : (
           <DndContext
             sensors={sensors}
@@ -233,8 +233,8 @@ function BoardView() {
 
             <DragOverlay>
               {activeCard && (
-                <div className="bg-white dark:bg-slate-700 dark:border dark:border-slate-600 rounded-md shadow-lg p-3 w-64 rotate-2">
-                  <p className="text-sm text-slate-800 dark:text-slate-100">
+                <div className="bg-white dark:bg-neutral-700 dark:border dark:border-neutral-600 rounded-md shadow-lg p-3 w-64 rotate-2">
+                  <p className="text-sm text-slate-800 dark:text-neutral-100">
                     {activeCard.title}
                   </p>
                 </div>

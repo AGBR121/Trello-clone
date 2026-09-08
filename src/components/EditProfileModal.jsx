@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+/**
+ * Modal para editar el nombre de usuario propio.
+ */
 function EditProfileModal({ open, currentUsername, onSave, onClose }) {
   const {
     register,
@@ -45,18 +48,18 @@ function EditProfileModal({ open, currentUsername, onSave, onClose }) {
         aria-modal="true"
         aria-labelledby="edit-profile-title"
         onClick={(e) => e.stopPropagation()}
-        className="bg-white dark:bg-slate-800 dark:border dark:border-slate-700 rounded-lg shadow-lg w-full max-w-sm p-6"
+        className="bg-white dark:bg-neutral-800 dark:border dark:border-neutral-700 rounded-lg shadow-lg w-full max-w-sm p-6"
       >
         <h2
           id="edit-profile-title"
-          className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-4"
+          className="text-lg font-semibold text-slate-800 dark:text-neutral-100 mb-4"
         >
           Editar perfil
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="username" className="block text-sm font-medium text-slate-700 dark:text-neutral-300 mb-1">
               Nombre de usuario
             </label>
             <input
@@ -71,7 +74,7 @@ function EditProfileModal({ open, currentUsername, onSave, onClose }) {
                     '3-20 caracteres: solo letras, números y guion bajo.',
                 },
               })}
-              className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="tu_nombre"
             />
             {errors.username && (
@@ -85,7 +88,7 @@ function EditProfileModal({ open, currentUsername, onSave, onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium rounded-md text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition"
+              className="px-4 py-2 text-sm font-medium rounded-md text-slate-700 dark:text-neutral-300 hover:bg-slate-100 dark:hover:bg-neutral-700 transition"
             >
               Cancelar
             </button>

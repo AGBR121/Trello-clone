@@ -37,14 +37,14 @@ function CardItem({ card, onOpen }) {
       {...attributes}
       {...listeners}
       onClick={() => onOpen(card)}
-      className="bg-white dark:bg-slate-700 dark:border dark:border-slate-600 rounded-md shadow-sm hover:shadow-md p-3 cursor-grab active:cursor-grabbing touch-none"
+      className="bg-white dark:bg-neutral-700 dark:border dark:border-neutral-600 rounded-md shadow-sm hover:shadow-md p-3 cursor-grab active:cursor-grabbing touch-none"
     >
-      <p className="text-sm text-slate-800 dark:text-slate-100 break-words">
+      <p className="text-sm text-slate-800 dark:text-neutral-100 break-words">
         {card.title}
       </p>
 
       {dueDate && (
-        <span className="inline-flex items-center gap-1 mt-2 text-xs text-slate-500 dark:text-slate-400">
+        <span className="inline-flex items-center gap-1 mt-2 text-xs text-slate-500 dark:text-neutral-400">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" />
             <path d="M16 2v4M8 2v4M3 10h18" />

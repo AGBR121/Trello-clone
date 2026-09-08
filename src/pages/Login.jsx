@@ -55,18 +55,18 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center px-4 relative transition-colors">
+    <div className="min-h-screen bg-slate-100 dark:bg-neutral-900 flex items-center justify-center px-4 relative transition-colors">
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
-      <div className="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-md dark:shadow-none dark:border dark:border-slate-700 w-full max-w-sm transition-colors">
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6 text-center">
+      <div className="bg-white dark:bg-neutral-800 p-8 rounded-lg shadow-md dark:shadow-none dark:border dark:border-neutral-700 w-full max-w-sm transition-colors">
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-neutral-100 mb-6 text-center">
           {isSignUp ? 'Crear cuenta' : 'Iniciar sesión'}
         </h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-neutral-300 mb-1">
               Email
             </label>
             <input
@@ -79,7 +79,7 @@ function Login() {
                   message: 'Ingresa un email válido.',
                 },
               })}
-              className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="tucorreo@ejemplo.com"
             />
             {errors.email && (
@@ -90,7 +90,7 @@ function Login() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-neutral-300 mb-1">
               Contraseña
             </label>
             <input
@@ -103,7 +103,7 @@ function Login() {
                   message: 'La contraseña debe tener al menos 6 caracteres.',
                 },
               })}
-              className="w-full border border-slate-300 dark:border-slate-600 rounded-md px-3 py-2 text-slate-800 dark:text-slate-100 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Mínimo 6 caracteres"
             />
             {errors.password && (
@@ -138,7 +138,7 @@ function Login() {
           </button>
         </form>
 
-        <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-6">
+        <p className="text-sm text-slate-500 dark:text-neutral-400 text-center mt-6">
           {isSignUp ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?'}{' '}
           <button
             type="button"
