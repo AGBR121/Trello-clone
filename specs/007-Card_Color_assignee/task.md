@@ -4,7 +4,7 @@
 - [x] T2 — Actualizar `src/components/CardDetailModal.jsx`: selector de
       color (swatches) + selector de encargado (`<select>` con
       `members`).
-- [ ] T3 — Actualizar `src/components/CardItem.jsx`: barra de color +
+- [x] T3 — Actualizar `src/components/CardItem.jsx`: barra de color +
       círculo de iniciales del encargado.
 - [ ] T4 — Actualizar `src/components/Column.jsx`: recibir y reenviar
       `members`, resolver username del `assigned_to` por tarjeta.
