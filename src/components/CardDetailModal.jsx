@@ -2,14 +2,36 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ConfirmDialog from './ConfirmDialog'
 
+// Set fijo de colores (paleta Tailwind, tono 400 para buen contraste
+// en ambos modos). Se guardan como hex directo en cards.color.
+const COLOR_OPTIONS = [
+  { label: 'Rojo', value: '#f87171' },
+  { label: 'Naranja', value: '#fb923c' },
+  { label: 'Amarillo', value: '#facc15' },
+  { label: 'Verde', value: '#4ade80' },
+  { label: 'Azul', value: '#60a5fa' },
+  { label: 'Morado', value: '#c084fc' },
+  { label: 'Rosa', value: '#f472b6' },
+]
+
 /**
  * `card` es null cuando el modal está cerrado (se controla así en vez
  * de un booleano `open` separado, porque necesitamos los datos de la
  * tarjeta específica que se abrió).
+ *
+ * `members` es la lista de miembros del tablero (de useBoardMembers),
+ * usada para poblar el selector de encargado.
  */
-function CardDetailModal({ card, onSave, onDelete, onClose }) {
+function CardDetailModal({ card, members = [], onSave, onDelete, onClose }) {
   const [showConfirm, setShowConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
+
+  // Color y encargado no son inputs de texto simples, así que se
+  // manejan aparte del formulario de React Hook Form.
+  const [color, setColor] = useState(null)
+  const [initialColor, setInitialColor] = useState(null)
+  const [assignedTo, setAssignedTo] = useState('')
+  const [initialAssignedTo, setInitialAssignedTo] = useState('')
 
   const {
     register,
@@ -20,7 +42,7 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
     defaultValues: { title: '', description: '', due_date: '' },
   })
 
-  // Cada vez que se abre una tarjeta distinta, precarga sus datos.
+  // Cada vez que se abre una tarjeta distinta, precarga todos sus datos.
   useEffect(() => {
     if (card) {
       reset({
@@ -28,6 +50,10 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
         description: card.description || '',
         due_date: card.due_date ? card.due_date.slice(0, 10) : '',
       })
+      setColor(card.color || null)
+      setInitialColor(card.color || null)
+      setAssignedTo(card.assigned_to || '')
+      setInitialAssignedTo(card.assigned_to || '')
     }
   }, [card, reset])
 
@@ -41,11 +67,15 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
 
   if (!card) return null
 
+  const hasChanges = isDirty || color !== initialColor || assignedTo !== initialAssignedTo
+
   async function onSubmit(values) {
     const { error } = await onSave(card.id, {
       title: values.title.trim(),
       description: values.description.trim() || null,
       due_date: values.due_date || null,
+      color: color || null,
+      assigned_to: assignedTo || null,
     })
 
     if (!error) onClose()
@@ -133,6 +163,64 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
             />
           </div>
 
+          <div>
+            <span className="block text-sm font-medium text-slate-700 dark:text-neutral-300 mb-1">
+              Color
+            </span>
+            <div className="flex items-center gap-2 flex-wrap">
+              <button
+                type="button"
+                onClick={() => setColor(null)}
+                aria-label="Sin color"
+                title="Sin color"
+                className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition ${
+                  color === null
+                    ? 'border-blue-500'
+                    : 'border-slate-300 dark:border-neutral-600'
+                }`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+
+              {COLOR_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setColor(opt.value)}
+                  aria-label={opt.label}
+                  title={opt.label}
+                  style={{ backgroundColor: opt.value }}
+                  className={`w-7 h-7 rounded-full border-2 transition ${
+                    color === opt.value
+                      ? 'border-blue-500'
+                      : 'border-transparent'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="assigned_to" className="block text-sm font-medium text-slate-700 dark:text-neutral-300 mb-1">
+              Encargado
+            </label>
+            <select
+              id="assigned_to"
+              value={assignedTo}
+              onChange={(e) => setAssignedTo(e.target.value)}
+              className="w-full border border-slate-300 dark:border-neutral-600 rounded-md px-3 py-2 text-slate-800 dark:text-neutral-100 dark:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Sin asignar</option>
+              {members.map((m) => (
+                <option key={m.user_id} value={m.user_id}>
+                  {m.username || m.email}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="flex items-center justify-between pt-2">
             <button
               type="button"
@@ -152,7 +240,7 @@ function CardDetailModal({ card, onSave, onDelete, onClose }) {
               </button>
               <button
                 type="submit"
-                disabled={isSubmitting || !isDirty}
+                disabled={isSubmitting || !hasChanges}
                 className="px-4 py-2 text-sm font-medium rounded-md bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
                 {isSubmitting ? 'Guardando...' : 'Guardar'}

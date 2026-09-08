@@ -223,6 +223,7 @@ function BoardView() {
                 <Column
                   key={column.id}
                   column={column}
+                  members={members}
                   onDeleteColumn={deleteColumn}
                   onCreateCard={createCard}
                   onOpenCard={setOpenCard}
@@ -246,6 +247,7 @@ function BoardView() {
 
       <CardDetailModal
         card={openCard}
+        members={members}
         onSave={updateCard}
         onDelete={deleteCard}
         onClose={() => setOpenCard(null)}
