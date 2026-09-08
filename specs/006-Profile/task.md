@@ -1,14 +1,14 @@
 # Tasks 006: Perfiles de usuario (nombre de usuario)
 
-- [ ] T1 — Correr en Supabase SQL Editor: crear tabla `profiles` + RLS
+- [x] T1 — Correr en Supabase SQL Editor: crear tabla `profiles` + RLS
       (select/insert/update).
-- [ ] T2 — Correr en Supabase SQL Editor: función y trigger
+- [x] T2 — Correr en Supabase SQL Editor: función y trigger
       `handle_new_user`.
-- [ ] T3 — Correr en Supabase SQL Editor: backfill de usuarios existentes
+- [x] T3 — Correr en Supabase SQL Editor: backfill de usuarios existentes
       sin perfil.
-- [ ] T4 — Correr en Supabase SQL Editor: recrear `get_board_members`
+- [x] T4 — Correr en Supabase SQL Editor: recrear `get_board_members`
       con `username` incluido (drop + create).
-- [ ] T5 — Crear `src/hooks/useProfile.js`.
+- [x] T5 — Crear `src/hooks/useProfile.js`.
 - [ ] T6 — Crear `src/components/EditProfileModal.jsx`.
 - [ ] T7 — Actualizar `src/pages/Dashboard.jsx`: mostrar username +
       botón editar perfil.
