@@ -39,7 +39,7 @@ function CardItem({ card, onOpen }) {
       onClick={() => onOpen(card)}
       className="bg-white dark:bg-neutral-700 dark:border dark:border-neutral-600 rounded-md shadow-sm hover:shadow-md p-3 cursor-grab active:cursor-grabbing touch-none"
     >
-      <p className="text-sm text-slate-800 dark:text-neutral-100 break-words">
+      <p className="text-sm text-slate-800 dark:text-neutral-100 wrap-break-word">
         {card.title}
       </p>
 

@@ -71,7 +71,7 @@ function Column({ column, onDeleteColumn, onCreateCard, onOpenCard }) {
 
       <div
         ref={setNodeRef}
-        className="flex flex-col gap-2 overflow-y-auto min-h-[2rem]"
+        className="flex flex-col gap-2 overflow-y-auto min-h-8"
       >
         <SortableContext items={cardIds} strategy={verticalListSortingStrategy}>
           {column.cards.map((card) => (
