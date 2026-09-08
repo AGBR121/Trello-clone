@@ -9,15 +9,19 @@ import {
   closestCorners,
 } from '@dnd-kit/core'
 import { supabase } from '../lib/supabaseClient'
+import { useAuth } from '../hooks/useAuth'
 import { useColumns } from '../hooks/useColumns'
+import { useBoardMembers } from '../hooks/useBoardMembers'
 import ThemeToggle from '../components/ThemeToggle'
 import Column from '../components/Column'
 import CreateColumnForm from '../components/CreateColumnForm'
 import CardDetailModal from '../components/CardDetailModal'
+import MembersPanel from '../components/MembersPanel'
 
 function BoardView() {
   const { boardId } = useParams()
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   const [board, setBoard] = useState(null)
   const [boardLoading, setBoardLoading] = useState(true)
@@ -35,8 +39,20 @@ function BoardView() {
     reorderCards,
   } = useColumns(boardId)
 
+  const {
+    members,
+    loading: membersLoading,
+    error: membersError,
+    inviteMember,
+    removeMember,
+    leaveBoard,
+  } = useBoardMembers(boardId)
+
   const [activeCard, setActiveCard] = useState(null) // tarjeta arrastrándose (para DragOverlay)
   const [openCard, setOpenCard] = useState(null) // tarjeta abierta en el modal de detalle
+  const [showMembers, setShowMembers] = useState(false)
+
+  const isOwner = board?.owner_id === user?.id
 
   // dnd-kit dispara drag solo si el puntero se mueve más de 8px,
   // así un click normal en la tarjeta sigue abriendo el modal en vez
@@ -111,6 +127,13 @@ function BoardView() {
     })
   }
 
+  async function handleLeaveBoard() {
+    const { error } = await leaveBoard()
+    if (!error) {
+      navigate('/dashboard')
+    }
+  }
+
   if (boardLoading) {
     return (
       <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center transition-colors">
@@ -160,7 +183,22 @@ function BoardView() {
               {board.name}
             </h1>
           </div>
-          <ThemeToggle />
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setShowMembers(true)}
+              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-md px-3 py-1.5 transition"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              Miembros
+            </button>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
@@ -211,6 +249,18 @@ function BoardView() {
         onSave={updateCard}
         onDelete={deleteCard}
         onClose={() => setOpenCard(null)}
+      />
+
+      <MembersPanel
+        open={showMembers}
+        isOwner={isOwner}
+        members={members}
+        loading={membersLoading}
+        error={membersError}
+        onInvite={inviteMember}
+        onRemove={removeMember}
+        onLeave={handleLeaveBoard}
+        onClose={() => setShowMembers(false)}
       />
     </div>
   )

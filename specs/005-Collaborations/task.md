@@ -5,8 +5,8 @@
 - [x] T3 — Correr en Supabase SQL Editor: policy de `delete` en
       `board_members`.
 - [x] T4 — Crear `src/hooks/useBoardMembers.js`.
-- [ ] T5 — Crear `src/components/MembersPanel.jsx`.
-- [ ] T6 — Actualizar `src/pages/BoardView.jsx`: botón "Miembros" en el
+- [x] T5 — Crear `src/components/MembersPanel.jsx`.
+- [x] T6 — Actualizar `src/pages/BoardView.jsx`: botón "Miembros" en el
       header, conectar `MembersPanel`, manejar salida del tablero
       (redirect a `/dashboard`).
 - [ ] T7 — Probar: invitar por email válido, email no registrado, email
