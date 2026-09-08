@@ -9,7 +9,7 @@
 - [x] T4 — Correr en Supabase SQL Editor: recrear `get_board_members`
       con `username` incluido (drop + create).
 - [x] T5 — Crear `src/hooks/useProfile.js`.
-- [ ] T6 — Crear `src/components/EditProfileModal.jsx`.
+- [x] T6 — Crear `src/components/EditProfileModal.jsx`.
 - [ ] T7 — Actualizar `src/pages/Dashboard.jsx`: mostrar username +
       botón editar perfil.
 - [ ] T8 — Actualizar `src/components/MembersPanel.jsx`: mostrar
