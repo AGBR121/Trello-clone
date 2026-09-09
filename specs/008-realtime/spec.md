@@ -1,12 +1,12 @@
 # Spec 008: Cambios en tiempo real
 
 ## Estado
-Borrador
+Completada ✅
 
 ## Contexto
-Hasta ahora, si dos personas tienen abierto el mismo tablero, los
-cambios de una no se reflejan en la pantalla de la otra hasta que
-recargue manualmente (F5). Esta spec usa Supabase Realtime para que
+Hasta ahora, si dos personas tenían abierto el mismo tablero, los
+cambios de una no se reflejaban en la pantalla de la otra hasta que
+recargara manualmente (F5). Esta spec usa Supabase Realtime para que
 crear/editar/eliminar/mover columnas y tarjetas se vea reflejado en
 vivo para todos los que tengan ese tablero abierto.
 
@@ -21,33 +21,28 @@ vivo para todos los que tengan ese tablero abierto.
 4. **Como usuario**, si otro miembro elimina una columna, quiero que
    desaparezca de mi pantalla sin recargar.
 5. **Como usuario**, los cambios en tiempo real solo deben llegarme si
-   soy miembro de ese tablero (no debo recibir eventos de tableros
-   ajenos).
+   soy miembro de ese tablero.
 
 ## Fuera de alcance para esta spec
-- Indicador de "quién está viendo el tablero ahora" (presence) — se
-  podría agregar después con el mismo mecanismo de Supabase Realtime.
-- Cursores en vivo o edición colaborativa carácter por carácter dentro
-  de un mismo campo de texto (ej. dos personas editando la descripción
-  de la misma tarjeta a la vez) — fuera de alcance, se resuelve con
-  "el último que guarda gana", como ya ocurre hoy.
-- Resolución de conflictos avanzada (ej. mostrar una advertencia si
-  alguien más editó la tarjeta mientras la tenías abierta).
+- Indicador de presencia ("quién está viendo el tablero ahora").
+- Cursores en vivo o edición colaborativa carácter por carácter.
+- Resolución de conflictos avanzada.
 
 ## Criterios de aceptación
 
-- [ ] Abrir el mismo tablero en dos pestañas/navegadores distintos (o
-      dos cuentas) muestra los cambios de una en la otra sin recargar.
-- [ ] Crear una columna se refleja en vivo en la otra sesión.
-- [ ] Crear, editar y eliminar una tarjeta se refleja en vivo.
-- [ ] Arrastrar una tarjeta (dentro o entre columnas) se refleja en vivo
+- [x] Abrir el mismo tablero en dos pestañas/navegadores distintos
+      muestra los cambios de una en la otra sin recargar.
+- [x] Crear una columna se refleja en vivo en la otra sesión.
+- [x] Crear, editar y eliminar una tarjeta se refleja en vivo.
+- [x] Arrastrar una tarjeta (dentro o entre columnas) se refleja en vivo
       con el orden correcto.
-- [ ] Eliminar una columna se refleja en vivo.
-- [ ] Un usuario sin acceso al tablero no recibe ningún evento de él
-      (verificado por las políticas RLS ya existentes, que Supabase
-      Realtime respeta).
+- [x] Eliminar una columna se refleja en vivo.
+- [x] Un usuario sin acceso al tablero no recibe eventos de él.
 
-## Decisión técnica (adelanto, se detalla en plan.md)
-Se agrega `board_id` directamente a la tabla `cards` (antes solo se
+## Decisión técnica
+Se agregó `board_id` directamente a la tabla `cards` (antes solo se
 sabía indirectamente vía `column_id → columns.board_id`), para poder
 filtrar los canales de Realtime de forma simple y directa por tablero.
+Se usó estrategia de "refetch completo" en cada evento en vez de
+reconciliar cambios puntuales, por simplicidad. Ver `plan.md` para el
+incidente de `REPLICA IDENTITY FULL` necesario para eventos DELETE.

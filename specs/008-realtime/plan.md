@@ -134,3 +134,32 @@ actualizados como si el usuario hubiera recargado la página.
 - Vigilar performance: si el tablero crece mucho (cientos de tarjetas),
   el refetch completo en cada evento podría notarse. No es un problema
   al alcance actual del proyecto.
+
+## Incidente: eventos DELETE no llegaban con el filtro por board_id
+
+**Síntoma:** crear/editar tarjetas se reflejaba en tiempo real
+correctamente, pero eliminar una tarjeta (o columna) NO se reflejaba en
+otras sesiones abiertas del mismo tablero.
+
+**Causa:** por defecto, Postgres usa `REPLICA IDENTITY DEFAULT`, que
+solo incluye la clave primaria en el "registro anterior" (`old record`)
+cuando ocurre un `DELETE`. Como el filtro de Realtime es
+`board_id=eq.<boardId>` y ese campo no viene incluido en el evento de
+borrado, Supabase no puede evaluar el filtro contra ese registro y
+descarta el evento silenciosamente (sin error visible en el cliente).
+
+**Solución:**
+
+```sql
+alter table cards replica identity full;
+alter table columns replica identity full;
+```
+
+Esto hace que Postgres incluya todos los campos de la fila (no solo la
+PK) en los eventos de `DELETE`/`UPDATE`, permitiendo que el filtro por
+`board_id` se evalúe correctamente.
+
+**Lección para futuras specs con Realtime filtrado:** si se agrega un
+filtro de Realtime sobre una columna que no es la clave primaria,
+`REPLICA IDENTITY FULL` es necesario en esa tabla para que los eventos
+`DELETE` (y `UPDATE` con filtro) lleguen correctamente.
