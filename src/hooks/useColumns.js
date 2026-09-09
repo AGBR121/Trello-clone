@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { supabase } from '../lib/supabaseClient'
 
 export function useColumns(boardId) {
@@ -32,6 +32,52 @@ export function useColumns(boardId) {
   useEffect(() => {
     fetchColumns()
   }, [fetchColumns])
+
+  // Escucha cambios en columns/cards de este tablero y vuelve a pedir
+  // el árbol completo. Con debounce corto para agrupar ráfagas de
+  // eventos (ej. un reorderCards genera varios upserts casi juntos).
+  const debounceRef = useRef(null)
+
+  useEffect(() => {
+    if (!boardId) return
+
+    function scheduleRefetch() {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+      debounceRef.current = setTimeout(() => {
+        fetchColumns()
+      }, 150)
+    }
+
+    const channel = supabase
+      .channel(`board-${boardId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'columns',
+          filter: `board_id=eq.${boardId}`,
+        },
+        scheduleRefetch
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'cards',
+          filter: `board_id=eq.${boardId}`,
+        },
+        scheduleRefetch
+      )
+      .subscribe()
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+      supabase.removeChannel(channel)
+    }
+  }, [boardId, fetchColumns])
+  // --------------------------------------------------------------------
 
   async function createColumn(name) {
     const trimmedName = name.trim()
@@ -72,6 +118,7 @@ export function useColumns(boardId) {
 
     const { error } = await supabase.from('cards').insert({
       column_id: columnId,
+      board_id: boardId, // spec 008: denormalizado para RLS + Realtime
       title: title.trim(),
       description: description?.trim() || null,
       due_date: due_date || null,
@@ -157,12 +204,14 @@ export function useColumns(boardId) {
       affectedCards.map((c) => ({
         id: c.id,
         column_id: c.column_id,
+        board_id: boardId,
         position: c.position,
         // Campos obligatorios que upsert necesita para no perderlos:
         title: c.title,
         description: c.description,
         due_date: c.due_date,
         assigned_to: c.assigned_to,
+        color: c.color,
       }))
     )
 
