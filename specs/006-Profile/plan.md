@@ -139,3 +139,27 @@ $$;
 - Confirmar que el backfill cubrió a todos los usuarios de prueba
   creados en specs anteriores (verificar con
   `select count(*) from auth.users` vs `select count(*) from profiles`).
+
+## Incidente: el trigger fallaba con "relation profiles does not exist"
+
+**Síntoma:** el registro de nuevos usuarios devolvía un error 500 desde
+`/auth/v1/signup`, mientras que el login funcionaba con normalidad. Los
+logs de Postgres mostraban: `relation "profiles" does not exist
+(SQLSTATE 42P01)`, a pesar de que la tabla `profiles` sí existía
+(confirmado con `information_schema.tables`).
+
+**Causa:** cuando una función `security definer` se ejecuta como parte
+de un trigger en `auth.users`, el `search_path` de esa ejecución no
+necesariamente incluye el esquema `public` por defecto. La función
+`handle_new_user()` original referenciaba `profiles` sin calificar el
+esquema, así que Postgres no podía resolver la tabla en ese contexto,
+aunque `public.profiles` existiera perfectamente.
+
+**Solución:** se agregó `set search_path = public` a la definición de
+la función, y se calificaron las referencias a la tabla como
+`public.profiles` explícitamente.
+
+**Lección para futuras funciones `security definer` en triggers:**
+siempre fijar `search_path` explícitamente y/o calificar los nombres de
+tabla con su esquema — no asumir que `public` está disponible por
+defecto en el contexto de ejecución de un trigger.
