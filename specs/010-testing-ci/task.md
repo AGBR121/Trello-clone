@@ -13,7 +13,7 @@
 - [x] T7 — Escribir `ConfirmDialog.test.jsx`.
 - [x] T8 — Crear `src/components/ErrorBoundary.jsx` y envolver `<App />`
       en `main.jsx`.
-- [ ] T9 — Crear `.github/workflows/ci.yml`.
+- [x] T9 — Crear `.github/workflows/ci.yml`.
 - [ ] T10 — Probar: correr `bun run test` localmente y confirmar que
       todo pasa; hacer push a GitHub y confirmar que el workflow corre
       y muestra ✅; romper algo a propósito (ej. un test) y confirmar

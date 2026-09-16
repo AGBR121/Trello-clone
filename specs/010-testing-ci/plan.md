@@ -117,3 +117,16 @@ que es lo que necesita un entorno de CI.
 - El paso de lint en CI asume que ya existe un script `lint` en
   `package.json` (viene por defecto con el scaffold de Vite + ESLint
   que se eligió al crear el proyecto).
+
+## Ajuste: variables de entorno en CI
+
+El plan original no contemplaba que `bun run test` **sí ejecuta** el
+código de `supabaseClient.js` (a diferencia de `bun run build`, que solo
+empaqueta), y ese archivo lanza un error si `VITE_SUPABASE_URL`/
+`VITE_SUPABASE_ANON_KEY` no están definidas. Sin esas variables, el
+workflow de CI fallaría en el paso de tests aunque el código estuviera
+perfecto.
+
+**Solución:** se agregaron `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`
+como GitHub Secrets del repositorio, inyectados vía `env:` en los pasos
+de `test` y `build` del workflow.
