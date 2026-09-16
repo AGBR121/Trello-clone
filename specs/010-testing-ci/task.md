@@ -6,7 +6,7 @@
 - [x] T3 — Agregar script `"test": "vitest"` a `package.json`.
 - [x] T4 — Exportar `USERNAME_PATTERN`/validación de `useProfile.js` y
       escribir `useProfile.test.js`.
-- [ ] T5 — Exportar `formatDueDate` de `CardItem.jsx` y escribir
+- [x] T5 — Exportar `formatDueDate` de `CardItem.jsx` y escribir
       `CardItem.test.js`.
 - [ ] T6 — Exportar `translateAuthError` de `useAuth.js` y escribir
       `useAuth.test.js`.
