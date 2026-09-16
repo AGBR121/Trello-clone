@@ -10,7 +10,7 @@
       `CardItem.test.js`.
 - [x] T6 — Exportar `translateAuthError` de `useAuth.js` y escribir
       `useAuth.test.js`.
-- [ ] T7 — Escribir `ConfirmDialog.test.jsx`.
+- [x] T7 — Escribir `ConfirmDialog.test.jsx`.
 - [ ] T8 — Crear `src/components/ErrorBoundary.jsx` y envolver `<App />`
       en `main.jsx`.
 - [ ] T9 — Crear `.github/workflows/ci.yml`.
