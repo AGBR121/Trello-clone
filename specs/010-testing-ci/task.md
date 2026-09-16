@@ -1,9 +1,9 @@
 # Tasks 010: Testing y CI/CD
 
-- [ ] T1 — Instalar Vitest + Testing Library + jsdom (`bun add -D`).
-- [ ] T2 — Configurar `vite.config.js` (bloque `test`) y crear
+- [x] T1 — Instalar Vitest + Testing Library + jsdom (`bun add -D`).
+- [x] T2 — Configurar `vite.config.js` (bloque `test`) y crear
       `src/test/setup.js`.
-- [ ] T3 — Agregar script `"test": "vitest"` a `package.json`.
+- [x] T3 — Agregar script `"test": "vitest"` a `package.json`.
 - [ ] T4 — Exportar `USERNAME_PATTERN`/validación de `useProfile.js` y
       escribir `useProfile.test.js`.
 - [ ] T5 — Exportar `formatDueDate` de `CardItem.jsx` y escribir
