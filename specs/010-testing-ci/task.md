@@ -4,7 +4,7 @@
 - [x] T2 — Configurar `vite.config.js` (bloque `test`) y crear
       `src/test/setup.js`.
 - [x] T3 — Agregar script `"test": "vitest"` a `package.json`.
-- [ ] T4 — Exportar `USERNAME_PATTERN`/validación de `useProfile.js` y
+- [x] T4 — Exportar `USERNAME_PATTERN`/validación de `useProfile.js` y
       escribir `useProfile.test.js`.
 - [ ] T5 — Exportar `formatDueDate` de `CardItem.jsx` y escribir
       `CardItem.test.js`.

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from './useAuth'
 
-const USERNAME_PATTERN = /^[a-zA-Z0-9_]{3,20}$/
+export const USERNAME_PATTERN = /^[a-zA-Z0-9_]{3,20}$/
 
 export function useProfile() {
   const { user } = useAuth()
