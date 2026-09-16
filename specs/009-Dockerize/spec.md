@@ -1,7 +1,7 @@
 # Spec 009: Dockerización
 
 ## Estado
-Borrador
+Completada ✅
 
 ## Contexto
 El proyecto es una SPA de React/Vite que se conecta a Supabase (backend
@@ -19,33 +19,31 @@ contenedores.
    incluir `node_modules` de desarrollo, herramientas de build, etc. en
    la imagen que corre en producción).
 3. **Como desarrollador**, quiero poder pasar las variables de entorno
-   de Supabase al momento de construir la imagen (ya que Vite las
-   inyecta en tiempo de build, no de ejecución).
+   de Supabase al momento de construir la imagen.
 4. **Como desarrollador**, quiero que las rutas de React Router
-   funcionen correctamente dentro del contenedor (recargar `/dashboard`
-   no debe dar 404).
+   funcionen correctamente dentro del contenedor.
 5. **Como desarrollador**, quiero un `docker-compose.yml` simple para
-   levantar el contenedor con un solo comando en desarrollo/demo local.
+   levantar el contenedor con un solo comando.
 
 ## Fuera de alcance para esta spec
-- Dockerizar Supabase (es un servicio externo gestionado, no aplica).
-- Orquestación multi-contenedor compleja (no hay backend propio que
-  dockerizar en este proyecto).
-- CI/CD automatizado para construir/publicar la imagen (queda como
-  posible spec futura).
+- Dockerizar Supabase (servicio externo gestionado).
+- Orquestación multi-contenedor compleja.
+- CI/CD automatizado para construir/publicar la imagen.
 
 ## Criterios de aceptación
 
-- [ ] `docker build` genera una imagen funcional del frontend.
-- [ ] La imagen final no incluye código fuente sin compilar ni
+- [x] `docker build` genera una imagen funcional del frontend.
+- [x] La imagen final no incluye código fuente sin compilar ni
       dependencias de desarrollo (build multi-stage).
-- [ ] Las variables de Supabase se pasan como build args, documentado
+- [x] Las variables de Supabase se pasan como build args, documentado
       claramente en el README.
-- [ ] Navegar directo a una ruta como `/dashboard` dentro del
-      contenedor (no solo `/`) funciona sin dar 404.
-- [ ] `docker-compose up` levanta el contenedor y la app es accesible
+- [x] Navegar directo a una ruta como `/dashboard` dentro del
+      contenedor funciona sin dar 404.
+- [x] `docker-compose up` levanta el contenedor y la app es accesible
       en el navegador.
 
-## Preguntas abiertas
-- ¿Servidor de archivos estáticos a usar dentro del contenedor? → Nginx,
-  por ser el estándar más liviano y probado para servir SPAs.
+## Decisión técnica
+Nginx (imagen `nginx:alpine`) como servidor de archivos estáticos en la
+etapa final del build multi-stage, por ser liviano y el estándar para
+servir SPAs. Ver `plan.md` para el detalle sobre variables de entorno
+de Vite en build time.

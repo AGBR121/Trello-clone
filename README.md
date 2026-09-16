@@ -77,6 +77,35 @@ In the Supabase **SQL Editor**, run the migrations documented in each `specs/00X
 bun run dev
 ```
 
+## Running with Docker
+
+The project also includes a multi-stage `Dockerfile` that builds a production-optimized image of the frontend (Nginx serving the Vite build). This isn't required for the Vercel deployment below — it's there to show the app can also be self-hosted or run in any container-based environment.
+
+> **Important:** Vite bakes `VITE_*` environment variables into the JS bundle **at build time**, not at container runtime. This means Supabase credentials must be passed as **build args**, and any change to them requires rebuilding the image — restarting the container alone won't pick up new values.
+
+### Option A: docker compose (recommended)
+
+Make sure you have a `.env` file in the project root (the same one used for local development):
+
+```bash
+docker compose up --build
+```
+
+The app will be available at `http://localhost:8080`.
+
+### Option B: plain Docker
+
+```bash
+docker build \
+  --build-arg VITE_SUPABASE_URL=https://your-project.supabase.co \
+  --build-arg VITE_SUPABASE_ANON_KEY=your_anon_key \
+  -t trello-clone .
+
+docker run -p 8080:80 trello-clone
+```
+
+Routing is handled by an included `nginx.conf` that falls back to `index.html` for any unmatched path, so reloading a client-side route like `/dashboard` works correctly instead of returning a 404.
+
 ## Database schema (summary)
 
 | Table | Purpose |
@@ -113,6 +142,7 @@ The project's constitution (`.specify/memory/constitution.md`) gathers the archi
 | 006 | User profiles | ✅ |
 | 007 | Card color and assignee | ✅ |
 | 008 | Real-time updates | ✅ |
+| 009 | Dockerization | ✅ |
 
 ## License
 
