@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabaseClient'
 
 // Errores más comunes de Supabase a español.
-function translateAuthError(message) {
+export function translateAuthError(message) {
   if (!message) return 'Ocurrió un error, intenta de nuevo.'
 
   if (message.includes('Invalid login credentials')) {
