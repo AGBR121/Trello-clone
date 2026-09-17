@@ -8,7 +8,7 @@ This project was built following a **Spec-Driven Development** methodology ([Spe
 
 ## Live demo
 
-> TODO: add the deployed URL here (e.g. a Vercel app: `https://trello-clone.vercel.app`).
+> [https://trello-clone-phi-smoky.vercel.app/](https://trello-clone-phi-smoky.vercel.app/)
 
 Prefer deploying to **Vercel** for a zero-config setup — it runs `bun run build` and serves the static output. The Docker image in this repo is an alternative for self-hosting or container-based environments (see [Running with Docker](#running-with-docker)). The repository is at [github.com/AGBR121/Trello-clone](https://github.com/AGBR121/Trello-clone).
 
