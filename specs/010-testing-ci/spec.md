@@ -1,7 +1,7 @@
 # Spec 010: Testing y CI/CD
 
 ## Estado
-Borrador
+Completada ✅
 
 ## Contexto
 El proyecto no tiene ninguna prueba automatizada ni pipeline de CI.
@@ -38,15 +38,15 @@ build en cada push/PR.
 
 ## Criterios de aceptación
 
-- [ ] `bun run test` ejecuta la suite de pruebas y muestra resultados
+- [x] `bun run test` ejecuta la suite de pruebas y muestra resultados
       claros en consola.
-- [ ] Existen pruebas para: validación de username (spec 006), formato
+- [x] Existen pruebas para: validación de username (spec 006), formato
       de fecha de tarjetas (spec 004), traducción de errores de auth
       (spec 001).
-- [ ] Existe al menos un test de componente (`ConfirmDialog`).
-- [ ] Un error de render no controlado muestra una pantalla de
+- [x] Existe al menos un test de componente (`ConfirmDialog`).
+- [x] Un error de render no controlado muestra una pantalla de
       recuperación, no una página en blanco.
-- [ ] Un workflow de GitHub Actions corre en cada push/PR a la rama
+- [x] Un workflow de GitHub Actions corre en cada push/PR a la rama
       principal, ejecutando lint, test y build, y falla visiblemente si
       alguno de esos pasos falla.
 
@@ -55,3 +55,22 @@ build en cada push/PR.
   useBoards, etc.)? → Fuera de alcance por ahora; requerirían mockear
   el cliente de Supabase de forma más elaborada. Se deja como
   extensión futura si se quiere profundizar en testing.
+
+## Decisión técnica
+- `formatDueDate` se extrajo a un módulo común `src/lib/dateutils.js`
+  (en lugar de quedar dentro de `CardItem.jsx` como preveía el plan),
+  porque es lógica pura y así puede probarse aislada y reutilizarse
+  desde cualquier componente.
+- `USERNAME_PATTERN` (`useProfile.js`) y `translateAuthError`
+  (`useAuth.js`) se exportan desde sus hooks para poder testearlos sin
+  renderizar componentes ni mockear Supabase.
+- Las variables `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY` se pasan
+  como GitHub Secrets al workflow, porque `bun run test` ejecuta
+  `supabaseClient.js` y ese archivo falla sin ellas (ver `plan.md`).
+
+## Notas de verificación (T10)
+- **Local:** `bun run test` → 4 archivos de test, 21 tests en verde.
+  `bun run lint` → sin errores.
+- **GitHub:** el workflow `ci.yml` corre lint + test + build en cada
+  push/PR a `main`, y el resultado (✅/❌) se ve en la pestaña
+  *Actions* del repositorio.

@@ -130,3 +130,25 @@ perfecto.
 **Solución:** se agregaron `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`
 como GitHub Secrets del repositorio, inyectados vía `env:` en los pasos
 de `test` y `build` del workflow.
+
+## Ajuste: ubicación de `formatDueDate` y sus tests
+
+El plan preveía exportar `formatDueDate` desde `CardItem.jsx` y testearlo
+en `src/components/CardItem.test.js`. Al implementarlo se decidió mover
+la función a un módulo compartido **`src/lib/dateutils.js`** (importada
+por `CardItem.jsx`), porque no hay dependencia de componente — es lógica
+pura que queda mejor fuera del JSX y lista para reutilizar. Su test quedó
+en `src/lib/dateutils.test.js`.
+
+Archivos de test finales:
+
+| Archivo | Cubre |
+|---|---|
+| `src/lib/dateutils.test.js` | `formatDueDate` (3 tests) |
+| `src/hooks/useAuth.test.js` | `translateAuthError` (6 tests) |
+| `src/hooks/useProfile.test.js` | `USERNAME_PATTERN` (7 tests) |
+| `src/components/ConfirmDialog.test.jsx` | componente (5 tests) |
+
+Nota: en Node, `toLocaleDateString('es-CO', ...)` devuelve la fecha en
+español de forma consistente, así que los tests de `formatDueDate` son
+estables entre la máquina local y CI.

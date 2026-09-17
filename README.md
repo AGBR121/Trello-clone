@@ -6,6 +6,12 @@ This project was built following a **Spec-Driven Development** methodology ([Spe
 
 > Note: the specs, code comments, and commit history are in Spanish, since that's the language the project was developed in. This README is in English to make the project accessible to a wider audience.
 
+## Live demo
+
+> TODO: add the deployed URL here (e.g. a Vercel app: `https://trello-clone.vercel.app`).
+
+Prefer deploying to **Vercel** for a zero-config setup — it runs `bun run build` and serves the static output. The Docker image in this repo is an alternative for self-hosting or container-based environments (see [Running with Docker](#running-with-docker)). The repository is at [github.com/AGBR121/Trello-clone](https://github.com/AGBR121/Trello-clone).
+
 ## Features
 
 - **Authentication** with Supabase Auth (sign up, login, logout, protected routes, session persistence)
@@ -26,8 +32,11 @@ This project was built following a **Spec-Driven Development** methodology ([Spe
 | Forms | React Hook Form |
 | Drag & drop | @dnd-kit/core, @dnd-kit/sortable |
 | Routing | React Router |
+| Testing | Vitest + Testing Library |
+| Linting | ESLint (flat config) |
+| CI/CD | GitHub Actions workflow |
 | Backend | Supabase (Postgres, Auth, Realtime, RLS) |
-| Package manager | bun |
+| Package manager | bun (npm also works) |
 
 ## Project structure
 
@@ -48,15 +57,24 @@ specs/              # Specs, technical plans, and tasks for each feature (in Spa
 
 ## Running it locally
 
-### 1. Clone and install dependencies
+> The project is developed with **bun**, but npm works too — a `package-lock.json` is maintained alongside `bun.lock`. Use whichever you prefer; commands below use bun.
+
+### 1. Requirements
+
+- **Node.js** 20.19+ or 22.12+ — required by Vite 8 when installing with npm.
+- **Bun** (latest) — required by CI and used throughout the project's tooling.
+
+### 2. Clone and install dependencies
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/AGBR121/Trello-clone.git
 cd trello-clone
 bun install
 ```
 
-### 2. Set up Supabase
+To install with npm instead: `npm install`.
+
+### 3. Set up Supabase
 
 Create a project at [supabase.com](https://supabase.com) and copy your **Project URL** and **anon public key** from *Project Settings → API*.
 
@@ -67,19 +85,31 @@ VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
 
-### 3. Create the database schema
+### 4. Create the database schema
 
 In the Supabase **SQL Editor**, run the migrations documented in each `specs/00X-*/plan.md`, in order, or check the schema summary below. Remember to enable **Realtime** for the `columns` and `cards` tables (Database → Replication), required for spec 008.
 
-### 4. Run in development
+### 5. Run in development
 
 ```bash
 bun run dev
 ```
 
+### 6. Available scripts
+
+| Command | Description |
+|---|---|
+| `bun run dev` | Start the Vite dev server with HMR |
+| `bun run build` | Build the production bundle to `dist/` |
+| `bun run lint` | Run ESLint over the whole project |
+| `bun run test` | Run the Vitest suite (add `-- --run` for a single pass) |
+| `bun run preview` | Preview the production build locally |
+
+All commands work with npm too by swapping `bun run` for `npm run`.
+
 ## Running with Docker
 
-The project also includes a multi-stage `Dockerfile` that builds a production-optimized image of the frontend (Nginx serving the Vite build). This isn't required for the Vercel deployment below — it's there to show the app can also be self-hosted or run in any container-based environment.
+The project also includes a multi-stage `Dockerfile` that builds a production-optimized image of the frontend (Nginx serving the Vite build). This isn't required for the Vercel deployment mentioned in the [Live demo](#live-demo) section — it's there to show the app can also be self-hosted or run in any container-based environment.
 
 > **Important:** Vite bakes `VITE_*` environment variables into the JS bundle **at build time**, not at container runtime. This means Supabase credentials must be passed as **build args**, and any change to them requires rebuilding the image — restarting the container alone won't pick up new values.
 
@@ -118,6 +148,12 @@ Routing is handled by an included `nginx.conf` that falls back to `index.html` f
 
 Every table has **Row Level Security** enabled. Access is resolved through `security definer` functions (`is_board_member`, `get_board_members`, `invite_member_by_email`) to avoid both infinite recursion in policies and direct client access to `auth.users`, which Supabase doesn't expose to the client.
 
+## How it works: state vs. realtime
+
+The UI state is **server-driven**. The app has no local data layer — hooks like `useBoards`, `useColumns`, and `useCards` fetch from Supabase and expose mutations (create/delete/update/move). After every mutation, the author's session updates from the mutation's response, while **Supabase Realtime** broadcasts the change to every other open session of the same board, keeping columns and cards in sync automatically.
+
+This means the frontend never guesses at state: it always reflects what's in Postgres, and collaboration works without building a custom websocket layer. The trade-off is that every write is a round-trip to the database, which is fine for a kanban app but is worth knowing before scaling realtime-heavy features.
+
 ## Methodology: Spec-Driven Development
 
 Every feature in this project went through this flow, documented in `specs/`:
@@ -143,7 +179,8 @@ The project's constitution (`.specify/memory/constitution.md`) gathers the archi
 | 007 | Card color and assignee | ✅ |
 | 008 | Real-time updates | ✅ |
 | 009 | Dockerization | ✅ |
+| 010 | Testing & CI/CD | ✅ |
 
 ## License
 
-Portfolio project, free to use.
+Portfolio project, free to use — see the [MIT License](./LICENSE).
