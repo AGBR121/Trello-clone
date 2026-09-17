@@ -31,7 +31,7 @@ function CreateBoardModal({ open, onCreate, onClose }) {
   if (!open) return null
 
   async function onSubmit({ name }) {
-    const { boardId, error } = await onCreate(name)
+    const { error } = await onCreate(name)
 
     if (error) {
       setError('name', { type: 'manual', message: error })

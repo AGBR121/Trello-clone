@@ -33,9 +33,6 @@ export function useColumns(boardId) {
     fetchColumns()
   }, [fetchColumns])
 
-  // Escucha cambios en columns/cards de este tablero y vuelve a pedir
-  // el árbol completo. Con debounce corto para agrupar ráfagas de
-  // eventos (ej. un reorderCards genera varios upserts casi juntos).
   const debounceRef = useRef(null)
 
   useEffect(() => {
@@ -118,7 +115,7 @@ export function useColumns(boardId) {
 
     const { error } = await supabase.from('cards').insert({
       column_id: columnId,
-      board_id: boardId, // spec 008: denormalizado para RLS + Realtime
+      board_id: boardId,
       title: title.trim(),
       description: description?.trim() || null,
       due_date: due_date || null,
@@ -158,18 +155,9 @@ export function useColumns(boardId) {
     return { error: null }
   }
 
-  /**
-   * Se llama al soltar una tarjeta (onDragEnd de dnd-kit).
-   * Recalcula las posiciones de la columna origen y, si es distinta,
-   * también de la columna destino, y persiste ambas en Supabase.
-   *
-   * Actualiza el estado local de inmediato (optimistic UI) y revierte
-   * si la persistencia falla.
-   */
   async function reorderCards({ cardId, sourceColumnId, destColumnId, newIndex }) {
-    const previousColumns = columns // snapshot para poder revertir
+    const previousColumns = columns
 
-    let movedCard = null
     const nextColumns = columns.map((col) => ({ ...col, cards: [...col.cards] }))
 
     const sourceCol = nextColumns.find((c) => c.id === sourceColumnId)
@@ -179,10 +167,9 @@ export function useColumns(boardId) {
     const cardIndex = sourceCol.cards.findIndex((c) => c.id === cardId)
     if (cardIndex === -1) return
 
-    ;[movedCard] = sourceCol.cards.splice(cardIndex, 1)
+    const [movedCard] = sourceCol.cards.splice(cardIndex, 1)
     destCol.cards.splice(newIndex, 0, movedCard)
 
-    // Recalcular position como enteros consecutivos en ambas columnas.
     sourceCol.cards = sourceCol.cards.map((c, i) => ({ ...c, position: i }))
     destCol.cards = destCol.cards.map((c, i) => ({
       ...c,
@@ -190,11 +177,8 @@ export function useColumns(boardId) {
       column_id: destCol.id,
     }))
 
-    // Optimistic UI: aplicar el cambio en pantalla de inmediato.
     setColumns(nextColumns)
 
-    // Persistir: upsert de todas las tarjetas afectadas (origen + destino,
-    // o solo una lista si sourceColumnId === destColumnId).
     const affectedCards =
       sourceColumnId === destColumnId
         ? destCol.cards
@@ -206,7 +190,6 @@ export function useColumns(boardId) {
         column_id: c.column_id,
         board_id: boardId,
         position: c.position,
-        // Campos obligatorios que upsert necesita para no perderlos:
         title: c.title,
         description: c.description,
         due_date: c.due_date,
@@ -216,7 +199,6 @@ export function useColumns(boardId) {
     )
 
     if (error) {
-      // Revertir si falla la persistencia.
       setColumns(previousColumns)
       setError('No se pudo guardar el nuevo orden. Se revirtió el cambio.')
     }

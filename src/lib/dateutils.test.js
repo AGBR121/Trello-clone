@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { formatDueDate } from './CardItem'
+import { formatDueDate } from './dateutils'
 
 describe('formatDueDate', () => {
   it('returns null when there is no date', () => {
